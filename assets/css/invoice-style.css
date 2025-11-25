@@ -1,0 +1,298 @@
+/*
+ * WC4BD Invoice Stylesheet
+ * Version: 2.0.1
+ */
+
+/* General Body and Layout */
+body.wc4bd-invoice-body {
+    background-color: #f3f4f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+    margin: 0 !important;
+    padding: 20px 0 !important;
+}
+
+.wc4bd-invoice-container {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.wc4bd-invoice-wrapper {
+    padding: 40px;
+}
+
+/* Page break only between multiple invoices */
+.wc4bd-invoice-container+.wc4bd-invoice-container {
+    page-break-before: always;
+}
+
+/* Header Section */
+.wc4bd-invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 30px;
+}
+
+.wc4bd-header-left .wc4bd-logo {
+    max-height: 70px;
+    width: auto;
+}
+
+.wc4bd-header-right {
+    text-align: right;
+}
+
+.wc4bd-header-right h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #111827;
+    letter-spacing: -1px;
+}
+
+.wc4bd-header-right p {
+    margin: 2px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Billed To / From Details */
+.wc4bd-invoice-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.wc4bd-details-box {
+    width: 48%;
+}
+
+.wc4bd-details-box h3 {
+    margin-top: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.wc4bd-details-box address {
+    font-style: normal;
+    line-height: 1.7;
+}
+
+.wc4bd-company-details {
+    text-align: right;
+}
+
+/* Items Table */
+.wc4bd-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.wc4bd-items-table thead {
+    border-bottom: 2px solid #d1d5db;
+}
+
+.wc4bd-items-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #111827;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+/* Right align for SKU, Qty, Total headers */
+.wc4bd-items-table th.wc4bd-align-right {
+    text-align: right !important;
+}
+
+.wc4bd-items-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.wc4bd-items-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.wc4bd-items-table td {
+    padding: 15px;
+    vertical-align: top;
+}
+
+/* Right align for SKU, Qty, Total cells */
+.wc4bd-items-table td.wc4bd-align-right {
+    text-align: right !important;
+}
+
+.wc4bd-item-thumb img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.wc4bd-item-details .wc4bd-item-name {
+    font-weight: 600;
+    color: #1f2937;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.wc4bd-item-details .wc4bd-item-meta {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.wc4bd-item-details .wc4bd-item-meta ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wc4bd-item-details .wc4bd-item-meta li {
+    margin-bottom: 2px;
+}
+
+/* Totals Section */
+.wc4bd-invoice-totals {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.wc4bd-invoice-totals table {
+    width: 50%;
+    max-width: 350px;
+    border-collapse: collapse;
+}
+
+.wc4bd-invoice-totals td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.wc4bd-invoice-totals tr:last-child td {
+    border-bottom: none;
+}
+
+.wc4bd-invoice-totals tr.order-total td {
+    font-weight: bold;
+    font-size: 18px;
+    color: #111827;
+    border-top: 2px solid #d1d5db;
+}
+
+/* Footer (Terms & Conditions) */
+.wc4bd-invoice-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.wc4bd-invoice-footer h4 {
+    margin-top: 0;
+    color: #374151;
+}
+
+/* Utility Class */
+.wc4bd-align-right {
+    text-align: right !important;
+}
+
+/* Print Button (Non-printable) */
+.wc4bd-print-button-container {
+    text-align: center;
+    padding: 20px;
+    margin: 0 !important;
+}
+
+.wc4bd-print-button {
+    padding: 12px 25px;
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.wc4bd-print-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Print-specific Styles */
+@media print {
+
+    /* Hide all external plugins and sticky elements */
+    .chaty-widget-i,
+    .chaty-main-widget,
+    #chaty-btn,
+    .chaty-widget,
+    .sticky,
+    .fixed,
+    #scroll-top,
+    #wpadminbar,
+    .woocommerce-notices-wrapper,
+    header:not(.wc4bd-invoice-header),
+    footer:not(.wc4bd-invoice-footer),
+    nav,
+    aside,
+    .sidebar {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    body.wc4bd-invoice-body {
+        background-color: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .wc4bd-invoice-container {
+        margin: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        background-color: #fff !important;
+        page-break-before: avoid !important;
+        page-break-inside: avoid;
+    }
+
+    /* Only add page break between multiple invoices */
+    .wc4bd-invoice-container+.wc4bd-invoice-container {
+        page-break-before: always !important;
+    }
+
+    .wc4bd-print-button-container {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 0 !important;
+    }
+
+    .wc4bd-invoice-wrapper {
+        padding: 20px !important;
+    }
+
+    /* Ensure alignment in print */
+    .wc4bd-items-table th.wc4bd-align-right,
+    .wc4bd-items-table td.wc4bd-align-right {
+        text-align: right !important;
+    }
+}
