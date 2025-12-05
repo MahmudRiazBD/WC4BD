@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       WC4BD - Ecommerce Toolkit for Bangladesh
- * Plugin URI:        https://GitHub.com/mahmudriaz.bd/wc4bd
+ * Plugin URI:        https://GitHub.com/mahmudriazbd/wc4bd
  * Description:       The essential WooCommerce toolkit for Bangladeshi e-commerce. Currently features Invoice & Shipping Label printing with Bulk Actions.
  * Version:           1.0.0
  * Author:            Mahmudul Hasan Riaz
