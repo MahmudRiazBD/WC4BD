@@ -57,7 +57,13 @@ class WC4BD_Frontend
     {
         // Enqueue the main stylesheet for our templates
         $handle = 'wc4bd-print-style';
-        wp_enqueue_style($handle, WC4BD_PLUGIN_URL . 'assets/css/invoice-style.css', [], WC4BD_Plugin::VERSION);
+
+        if (get_query_var('print_wc4bd_stickers')) {
+            $handle = 'wc4bd-sticker-style';
+            wp_enqueue_style($handle, WC4BD_PLUGIN_URL . 'assets/css/sticker-style.css', [], WC4BD_Plugin::VERSION);
+        } else {
+            wp_enqueue_style($handle, WC4BD_PLUGIN_URL . 'assets/css/invoice-style.css', [], WC4BD_Plugin::VERSION);
+        }
 
         // Add inline CSS to hide third-party plugins in both screen and print
         $custom_css = "

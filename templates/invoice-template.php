@@ -81,7 +81,7 @@ $terms = get_option('wc4bd_terms');
                                 $order->get_billing_postcode(),
                                 $order->get_billing_country() ? WC()->countries->get_countries()[$order->get_billing_country()] : ''
                             ];
-                            echo implode('<br>', array_filter($address_parts));
+                            echo wp_kses_post(implode('<br>', array_filter($address_parts)));
                             ?>
                             <?php if ($order->get_billing_phone()): ?>
                                 <br><?php echo '<strong>' . esc_html__('Phone:', 'wc4bd') . '</strong> ' . esc_html($order->get_billing_phone()); ?>
@@ -107,7 +107,8 @@ $terms = get_option('wc4bd_terms');
                         <?php foreach ($order->get_items() as $item):
                             $product = $item->get_product(); ?>
                             <tr>
-                                <td class="wc4bd-item-thumb"><?php echo $product ? $product->get_image([60, 60]) : ''; ?>
+                                <td class="wc4bd-item-thumb">
+                                    <?php echo $product ? wp_kses_post($product->get_image([60, 60])) : ''; ?>
                                 </td>
                                 <td class="wc4bd-item-details">
                                     <span class="wc4bd-item-name"><?php echo esc_html($item->get_name()); ?></span>
@@ -117,7 +118,8 @@ $terms = get_option('wc4bd_terms');
                                 </td>
                                 <td class="wc4bd-align-right"><?php echo esc_html($item->get_quantity()); ?></td>
                                 <td class="wc4bd-align-right">
-                                    <?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></td>
+                                    <?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

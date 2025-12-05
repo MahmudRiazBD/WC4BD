@@ -21,7 +21,7 @@ class WC4BD_Admin
         add_action('add_meta_boxes', [$this, 'add_invoice_meta_box']);
 
         // --- Custom Bulk Print Button ---
-        add_action('admin_footer', [$this, 'add_custom_bulk_print_button_js']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
     }
 
     // --- Feature 1: "Actions" Column ---
@@ -91,52 +91,24 @@ class WC4BD_Admin
         echo '</p>';
     }
 
-    // --- Feature 3: Custom Bulk Print Button ---
-    public function add_custom_bulk_print_button_js()
+    // --- Feature 3: Custom Bulk Print Button & Admin Scripts ---
+    public function enqueue_admin_scripts($hook)
     {
         $screen = get_current_screen();
-        if ($screen && in_array($screen->id, ['edit-shop_order', 'woocommerce_page_wc-orders'], true)) {
-            $nonce = wp_create_nonce('wc4bd_print_invoices');
-            ?>
-            <script type="text/javascript">
-                jQuery(document).ready(function ($) {
-                    var $bulkActions = $('.bulkactions');
-                    if ($bulkActions.length === 0) return;
 
-                    var invoiceBtnHtml = '<a href="#" id="wc4bd-bulk-print-invoices" class="button" style="margin-left: 5px; display: none;"><?php esc_html_e('Bulk Print Invoices', 'wc4bd'); ?></a>';
-                    var stickerBtnHtml = '<a href="#" id="wc4bd-bulk-print-stickers" class="button" style="margin-left: 5px; display: none;"><?php esc_html_e('Bulk Print Stickers', 'wc4bd'); ?></a>';
+        // Only enqueue on Order List and Settings page
+        $is_order_page = $screen && in_array($screen->id, ['edit-shop_order', 'woocommerce_page_wc-orders'], true);
+        $is_settings_page = 'woocommerce_page_wc4bd-settings' === $hook;
 
-                    $bulkActions.append(invoiceBtnHtml).append(stickerBtnHtml);
+        if ($is_order_page || $is_settings_page) {
+            wp_enqueue_script('wc4bd-admin-script', WC4BD_PLUGIN_URL . 'assets/js/admin-script.js', ['jquery'], WC4BD_Plugin::VERSION, true);
 
-                    var $invoiceBtn = $('#wc4bd-bulk-print-invoices');
-                    var $stickerBtn = $('#wc4bd-bulk-print-stickers');
-
-                    function toggleButtonsVisibility() {
-                        var checkedCount = $('input[name="post[]"]:checked, input[name="id[]"]:checked').length;
-                        $invoiceBtn.toggle(checkedCount > 0);
-                        $stickerBtn.toggle(checkedCount > 0);
-                    }
-
-                    toggleButtonsVisibility();
-                    $(document).on('change', 'th.check-column input[type="checkbox"], td.check-column input[type="checkbox"]', toggleButtonsVisibility);
-
-                    function handleBulkPrint(e, type) {
-                        e.preventDefault();
-                        var order_ids = [];
-                        $('input[name="post[]"]:checked, input[name="id[]"]:checked').each(function () {
-                            order_ids.push($(this).val());
-                        });
-                        if (order_ids.length > 0) {
-                            var url = "<?php echo home_url('/'); ?>?print_wc4bd_" + type + "=true&_wpnonce=<?php echo $nonce; ?>&order_ids=" + order_ids.join(',');
-                            window.open(url, '_blank');
-                        }
-                    }
-
-                    $(document).on('click', '#wc4bd-bulk-print-invoices', function (e) { handleBulkPrint(e, 'invoices'); });
-                    $(document).on('click', '#wc4bd-bulk-print-stickers', function (e) { handleBulkPrint(e, 'stickers'); });
-                });
-            </script>
-            <?php
+            wp_localize_script('wc4bd-admin-script', 'wc4bd_admin_params', [
+                'home_url' => home_url('/'),
+                'nonce' => wp_create_nonce('wc4bd_print_invoices'),
+                'i18n_bulk_invoice' => esc_html__('Bulk Print Invoices', 'wc4bd'),
+                'i18n_bulk_sticker' => esc_html__('Bulk Print Stickers', 'wc4bd')
+            ]);
         }
     }
 
@@ -167,7 +139,7 @@ class WC4BD_Admin
                 ?>
             </form>
         </div>
-    <?php
+        <?php
     }
     public function register_settings()
     {
@@ -202,7 +174,7 @@ class WC4BD_Admin
     public function logo_field_html()
     {
         $logo_url = get_option('wc4bd_business_logo');
-        echo '<input type="text" name="wc4bd_business_logo" id="wc4bd_business_logo" value="' . esc_attr($logo_url) . '" class="regular-text"><input type="button" id="upload-btn" class="button-secondary" value="Upload Image"><script>jQuery(document).ready(function($){$("#upload-btn").click(function(e){e.preventDefault();var i=wp.media({title:"Upload Logo",multiple:!1}).open().on("select",function(){$("#wc4bd_business_logo").val(i.state().get("selection").first().toJSON().url)})})});</script>';
+        echo '<input type="text" name="wc4bd_business_logo" id="wc4bd_business_logo" value="' . esc_attr($logo_url) . '" class="regular-text"><input type="button" id="wc4bd-upload-btn" class="button-secondary" value="Upload Image">';
     }
     public function text_field_html($args)
     {
