@@ -65,6 +65,27 @@ class WC4BD_Frontend
             wp_enqueue_style($handle, WC4BD_PLUGIN_URL . 'assets/css/invoice-style.css', [], WC4BD_Plugin::VERSION);
         }
 
+        // **NEW**: Dequeue all other styles and scripts to prevent theme interference
+        global $wp_styles, $wp_scripts;
+
+        // Dequeue Styles
+        if (isset($wp_styles->queue)) {
+            foreach ($wp_styles->queue as $style_handle) {
+                if ($style_handle !== 'wc4bd-print-style' && $style_handle !== 'wc4bd-sticker-style' && $style_handle !== 'admin-bar') {
+                    wp_dequeue_style($style_handle);
+                }
+            }
+        }
+
+        // Dequeue Scripts (except essential ones if needed, but usually print templates don't need theme scripts)
+        if (isset($wp_scripts->queue)) {
+            foreach ($wp_scripts->queue as $script_handle) {
+                if ($script_handle !== 'admin-bar') { // Keep admin bar script if needed, or remove it too
+                    wp_dequeue_script($script_handle);
+                }
+            }
+        }
+
         // Add inline CSS to hide third-party plugins in both screen and print
         $custom_css = "
             /* Hide Chaty Plugin and other sticky elements */
