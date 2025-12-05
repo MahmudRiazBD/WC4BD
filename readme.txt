@@ -23,6 +23,9 @@ The essential WooCommerce toolkit for Bangladeshi e-commerce. Currently features
 
 This plugin is lightweight and focused on speed, ensuring it doesn't slow down your site.
 
+**Learn more**: [Visit our landing page](https://wc4bd.commercians.com)  
+**GitHub**: [View source code](https://github.com/MahmudRiazBD/WC4BD)
+
 == Installation ==
 
 1.  Upload the plugin files to the `/wp-content/plugins/wc4bd` directory, or install the plugin through the WordPress plugins screen directly.
